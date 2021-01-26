@@ -41,6 +41,31 @@ char_scalar <- function(x) .Call(wrap__char_scalar, x)
 #' @export
 char_vec <- function(x) .Call(wrap__char_vec, x)
 
+#' Logical type stability checks
+#' @param x Logical scalar
+#' @export
+rbool_scalar <- function(x) .Call(wrap__rbool_scalar, x)
+
+#' Logical type stability checks
+#' @param x Logical scalar
+#' @export
+rbool_vec <- function(x) .Call(wrap__rbool_vec, x)
+
+#' Logical type stability checks
+#' @param x Logical vector
+#' @export
+rbool_slice <- function(x) .Call(wrap__rbool_slice, x)
+
+#' Logical type stability checks
+#' @param x Logical vector
+#' @export
+bool_vec <- function(x) .Call(wrap__bool_vec, x)
+
+#' Logical type stability checks
+#' @param x Logical vector
+#' @export
+bool_slice <- function(x) .Call(wrap__bool_slice, x)
+
 #' Class for testing (exported)
 #' @examples
 #' x <- MyClass$new()

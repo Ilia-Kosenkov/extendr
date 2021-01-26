@@ -36,3 +36,12 @@ test_that("Conversion of R types to Rust types and vice versa works", {
   expect_error(char_vec(c("hello", NA)), "Input vector cannot contain NA's")
 })
 
+
+test_that("Logical parameters transformed correctly", {
+  expect_error(bool_scalar(NA))
+
+  expect_equal(rbool_scalar(TRUE), TRUE)
+  expect_equal(rbool_scalar(FALSE), FALSE)
+  expect_equal(rbool_scalar(NA), NA)
+
+})

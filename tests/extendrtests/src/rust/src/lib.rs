@@ -10,9 +10,7 @@ fn hello_world() -> &'static str {
 /// Do nothing.
 /// @export
 #[extendr]
-fn do_nothing() {
-}
-
+fn do_nothing() {}
 
 // functions to test input/output conversion
 
@@ -20,31 +18,81 @@ fn do_nothing() {
 /// @param x a number
 /// @export
 #[extendr]
-fn double_scalar(x: f64) -> f64 { x }
+fn double_scalar(x: f64) -> f64 {
+    x
+}
 
 /// Convert an int scalar to itself
 /// @param x a number
 /// @export
 #[extendr]
-fn int_scalar(x: i32) -> i32 { x }
+fn int_scalar(x: i32) -> i32 {
+    x
+}
 
 /// Convert a bool scalar to itself
 /// @param x a number
 /// @export
 #[extendr]
-fn bool_scalar(x: bool) -> bool { x }
+fn bool_scalar(x: bool) -> bool {
+    x
+}
 
 /// Convert a string to itself
 /// @param x a string
 /// @export
 #[extendr]
-fn char_scalar(x: String) -> String { x }
+fn char_scalar(x: String) -> String {
+    x
+}
 
 /// Convert a vector of strings to itself
 /// @param x a vector of strings
 /// @export
 #[extendr]
-fn char_vec(x: Vec<String>) -> Vec<String> {x}
+fn char_vec(x: Vec<String>) -> Vec<String> {
+    x
+}
+
+/// Logical type stability checks
+/// @param x Logical scalar
+/// @export
+#[extendr]
+fn rbool_scalar(x: Rbool) -> Rbool {
+    x
+}
+
+/// Logical type stability checks
+/// @param x Logical scalar
+/// @export
+#[extendr]
+fn rbool_vec(x: Vec<Rbool>) -> Vec<Rbool> {
+    x
+}
+
+/// Logical type stability checks
+/// @param x Logical vector
+/// @export
+#[extendr]
+fn rbool_slice(x: &[Rbool]) -> Vec<Rbool> {
+    x.to_vec()
+}
+
+/// Logical type stability checks
+/// @param x Logical vector
+/// @export
+#[extendr]
+fn bool_vec(x: Vec<bool>) -> Vec<bool> {
+    x
+}
+
+/// Logical type stability checks
+/// @param x Logical vector
+/// @export
+#[extendr]
+fn bool_slice(x: &[bool]) -> Vec<bool> {
+    x.to_vec()
+}
 
 // Class for testing
 #[derive(Default, Debug)]
@@ -65,18 +113,18 @@ impl MyClass {
     fn new() -> Self {
         Self { a: 0 }
     }
-    
+
     /// Method for setting stuff.
     /// @param x a number
-    fn set_a(& mut self, x: i32) {
+    fn set_a(&mut self, x: i32) {
         self.a = x;
     }
-    
+
     /// Method for getting stuff.
     fn a(&self) -> i32 {
         self.a
     }
-    
+
     /// Method for getting one's self.
     fn me(&self) -> &Self {
         self
@@ -96,13 +144,12 @@ impl MyClassUnexported {
     fn new() -> Self {
         Self { a: 22 }
     }
-    
+
     /// Method for getting stuff.
     fn a(&self) -> i32 {
         self.a
     }
 }
-
 
 // Macro to generate exports
 extendr_module! {
@@ -115,7 +162,14 @@ extendr_module! {
     fn bool_scalar;
     fn char_scalar;
     fn char_vec;
-    
+
+    fn rbool_scalar;
+    fn rbool_vec;
+    fn rbool_slice;
+
+    fn bool_vec;
+    fn bool_slice;
+
     impl MyClass;
     impl MyClassUnexported;
 }
