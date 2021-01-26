@@ -59,7 +59,7 @@ fn test_from_robj() {
     // conversion from a vector to a scalar value
     assert_eq!(
         <i32>::from_robj(&Robj::from(vec![].as_slice() as &[i32])),
-        Err("Input must be of length 1. Vector of length zero given.")
+        Err(Error::ScalarLen(0))
     );
     assert_eq!(
         <i32>::from_robj(&Robj::from(vec![1].as_slice() as &[i32])),
@@ -67,7 +67,7 @@ fn test_from_robj() {
     );
     assert_eq!(
         <i32>::from_robj(&Robj::from(vec![1, 2].as_slice() as &[i32])),
-        Err("Input must be of length 1. Vector of length >1 given.")
+        Err(Error::ScalarLen(2))
     );
 
     use std::collections::HashMap;
