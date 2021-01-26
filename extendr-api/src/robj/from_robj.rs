@@ -55,6 +55,20 @@ impl_prim_from_robj!(i64);
 impl_prim_from_robj!(f32);
 impl_prim_from_robj!(f64);
 
+impl<'a> FromRobj<'a> for Rbool {
+    fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
+        if let Some(v) = robj.as_logical_slice() {
+            match v.len() {
+                0 => Err("Input must be of length 1. Vector of length zero given."),
+                1 => Ok(v[0]),
+                _ => Err("Input must be of length 1. Vector of length >1 given."),
+            }
+        } else {
+            Err("Not a logical object.")
+        }
+    }
+}
+
 impl<'a> FromRobj<'a> for bool {
     fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
         if let Some(v) = robj.as_logical_slice() {
@@ -95,6 +109,30 @@ impl<'a> FromRobj<'a> for String {
             Ok(s.to_string())
         } else {
             Err("not a string object")
+        }
+    }
+}
+
+impl<'a> FromRobj<'a> for Vec<Rbool> {
+    fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
+        if let Some(v) = robj.as_logical_slice() {
+            Ok(Vec::from(v))
+        } else {
+            Err("Input is not an integer vector.")
+        }
+    }
+}
+
+impl<'a> FromRobj<'a> for Vec<bool> {
+    fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
+        if let Some(v) = robj.as_logical_slice() {
+            if v.iter().any(|item| item.is_na()) {
+                Err("Input is not a compatible logical vector.\nx  Vector contains one or more `NA` values.")
+            } else {
+                Ok(v.iter().map(|item| item.into()).collect::<Vec<bool>>())
+            }
+        } else {
+            Err("Input is not a compatible logical vector.\nx  Vector has an incompatible type.")
         }
     }
 }
@@ -202,14 +240,14 @@ impl<'a> FromRobj<'a> for Option<i32> {
 // NA-sensitive logical input handling
 impl<'a> FromRobj<'a> for Option<bool> {
     fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
-        if let Some(val) = robj.as_logical() {
-            if val.is_na() {
-                Ok(None)
-            } else {
-                Ok(Some(val.is_true()))
+        if let Some(v) = robj.as_logical_slice() {
+            match v.len() {
+                0 => Err("Input must be of length 1. Vector of length zero given."),
+                1 => Ok(v[0].into()),
+                _ => Err("Input must be of length 1. Vector of length >1 given."),
             }
         } else {
-            Err("expected a logical scalar")
+            Err("Not a logical object.")
         }
     }
 }
@@ -262,6 +300,20 @@ where
             Ok(slice)
         } else {
             Err("Expected a vector type.")
+        }
+    }
+}
+
+impl<'a> FromRobj<'a> for &'a [bool] {
+    fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
+        if let Some(v) = robj.as_logical_slice() {
+            if v.iter().any(|item| item.is_na()) {
+                Err("")
+            } else {
+                Ok(unsafe { std::mem::transmute(v) })
+            }
+        } else {
+            Err("")
         }
     }
 }
