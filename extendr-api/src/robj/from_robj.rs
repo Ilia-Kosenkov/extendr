@@ -308,12 +308,13 @@ impl<'a> FromRobj<'a> for &'a [bool] {
     fn from_robj(robj: &'a Robj) -> std::result::Result<Self, &'static str> {
         if let Some(v) = robj.as_logical_slice() {
             if v.iter().any(|item| item.is_na()) {
-                Err("")
+                Err("Input is not a compatible logical vector.\nx  Vector contains one or more `NA` values.")
             } else {
+                // sizeof::<Rbool> == sizeof::<i32> == sizeof::<bool>
                 Ok(unsafe { std::mem::transmute(v) })
             }
         } else {
-            Err("")
+            Err("Input is not a compatible logical vector.\nx  Vector has an incompatible type.")
         }
     }
 }
