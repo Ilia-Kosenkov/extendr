@@ -55,7 +55,13 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        match self {
+            Error::ScalarNA => write!(f, "Invalid input.\nx  Expected a scalar, received `NA`."),
+            Error::VectorNA => write!(f, "Invalid input.\nx  One or more vector elements are `NA`.\nx  `NA`s are not allowed."),
+            Error::ScalarLen(len) => write!(f, "Invalid input.\nx  Expected a scalar, got vector of length {}.", len),
+            Error::TypeMismatch {expected: exp, actual: act} => write!(f, "Invalid input.\nx  Expected object of type `{}`, received `{}`.", exp, act),
+            _ => write!(f, "{:?}", self)
+        }
     }
 }
 
