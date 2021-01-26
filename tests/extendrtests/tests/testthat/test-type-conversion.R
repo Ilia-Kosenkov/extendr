@@ -37,11 +37,24 @@ test_that("Conversion of R types to Rust types and vice versa works", {
 })
 
 
+test_that("'type_name' is identical to 'typeof'", {
+
+  expect_equal(type_name(1L), typeof(1L))
+  expect_equal(type_name(1.5), typeof(1.5))
+  expect_equal(type_name(TRUE), typeof(TRUE))
+  expect_equal(type_name("text"), typeof("text"))
+
+})
+
 test_that("Logical parameters transformed correctly", {
   expect_error(bool_scalar(NA))
 
   expect_equal(rbool_scalar(TRUE), TRUE)
   expect_equal(rbool_scalar(FALSE), FALSE)
   expect_equal(rbool_scalar(NA), NA)
+
+
+  
+
 
 })

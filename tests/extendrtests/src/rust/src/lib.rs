@@ -94,6 +94,11 @@ fn bool_slice(x: &[bool]) -> Vec<bool> {
     x.to_vec()
 }
 
+#[extendr]
+fn type_name(x: Robj) -> &'static str {
+    x.type_name().unwrap_or_else(|e| e)
+}
+
 // Weird behavior of parameter descriptions:
 // first passes tests as is, second -- only in backqutoes.
 /// Test whether `_arg` parameters are treated correctly in R
@@ -102,7 +107,9 @@ fn bool_slice(x: &[bool]) -> Vec<bool> {
 /// @param `_y` an integer scalar, ignored
 /// @export
 #[extendr]
-fn special_param_names(_x : i32, _y : i32) -> i32 { _x - _y }
+fn special_param_names(_x: i32, _y: i32) -> i32 {
+    _x - _y
+}
 
 /// Test wrapping of special function name
 /// @name f__00__special_function_name
@@ -150,8 +157,7 @@ impl MyClass {
 
 // Class for testing special names
 #[derive(Default, Debug)]
-struct __MyClass {
-}
+struct __MyClass {}
 
 // Class for testing special names
 // Unexported because of documentation conflict
@@ -164,7 +170,6 @@ impl __MyClass {
     /// Method with special name unsupported by R
     fn __name_test(&self) {}
 }
-
 
 // Class for testing (unexported)
 #[derive(Default, Debug)]
@@ -204,7 +209,9 @@ extendr_module! {
 
     fn bool_vec;
     fn bool_slice;
-    
+
+    fn type_name;
+
     fn special_param_names;
     fn __00__special_function_name;
 

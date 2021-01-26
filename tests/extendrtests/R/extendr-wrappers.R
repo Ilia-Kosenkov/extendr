@@ -65,6 +65,9 @@ bool_vec <- function(x) .Call(wrap__bool_vec, x)
 #' @param x Logical vector
 #' @export
 bool_slice <- function(x) .Call(wrap__bool_slice, x)
+
+type_name <- function(x) .Call(wrap__type_name, x)
+
 #' Test whether `_arg` parameters are treated correctly in R
 #' Executes \code{`_x` - `_y`}
 #' @param _x an integer scalar, ignored
