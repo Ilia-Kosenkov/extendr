@@ -62,7 +62,7 @@ impl<'a> FromRobj<'a> for bool {
                 0 => Err("Input must be of length 1. Vector of length zero given."),
                 1 => {
                     if !v[0].is_na() {
-                        Ok(v[0].to_bool())
+                        Ok(v[0].into())
                     } else {
                         Err("Input must not be NA.")
                     }
