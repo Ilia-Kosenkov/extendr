@@ -191,6 +191,18 @@ impl Robj {
         unsafe { TYPEOF(self.get()) as u32 }
     }
 
+    #[doc(hidden)]
+    // Type's string representation
+    pub fn type_name(&self) -> std::result::Result<&'static str, &'static str> {
+        let str = unsafe { std::ffi::CStr::from_ptr(Rf_type2char(self.sexptype())).to_str() };
+
+        if let Ok(addr) = str {
+            Ok(addr)
+        } else {
+            Err("Failed to retrieve type string representation.")
+        }
+    }
+
     /// Get the extended length of the object.
     /// ```
     /// use extendr_api::*;        // Put API in scope.
