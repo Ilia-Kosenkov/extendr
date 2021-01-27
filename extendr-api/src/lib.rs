@@ -190,7 +190,7 @@
     html_logo_url = "https://raw.githubusercontent.com/extendr/extendr/master/extendr-logo-256.png"
 )]
 
-mod error;
+pub mod error;
 mod functions;
 mod lang;
 mod logical;
