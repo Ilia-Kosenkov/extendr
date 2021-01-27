@@ -128,7 +128,7 @@ fn test_from_robj() {
 #[test]
 fn test_to_robj() {
     extendr_engine::start_r();
-    assert_eq!(Robj::from(true), Robj::from([Rbool::from(true)]));
+    assert_eq!(Robj::from(true), Robj::from([Logical::from(true)]));
     //assert_eq!(Robj::from(1_u8), Robj::from(1));
     assert_eq!(Robj::from(1_u16), Robj::from(1));
     assert_eq!(Robj::from(1_u32), Robj::from(1));

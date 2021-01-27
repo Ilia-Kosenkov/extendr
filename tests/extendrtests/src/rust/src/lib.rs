@@ -58,7 +58,7 @@ fn char_vec(x: Vec<String>) -> Vec<String> {
 /// @param x Logical scalar
 /// @export
 #[extendr]
-fn rbool_scalar(x: Rbool) -> Rbool {
+fn rbool_scalar(x: Logical) -> Logical {
     x
 }
 
@@ -66,7 +66,7 @@ fn rbool_scalar(x: Rbool) -> Rbool {
 /// @param x Logical scalar
 /// @export
 #[extendr]
-fn rbool_vec(x: Vec<Rbool>) -> Vec<Rbool> {
+fn rbool_vec(x: Vec<Logical>) -> Vec<Logical> {
     x
 }
 
@@ -74,7 +74,7 @@ fn rbool_vec(x: Vec<Rbool>) -> Vec<Rbool> {
 /// @param x Logical vector
 /// @export
 #[extendr]
-fn rbool_slice(x: &[Rbool]) -> Vec<Rbool> {
+fn rbool_slice(x: &[Logical]) -> Vec<Logical> {
     x.to_vec()
 }
 
