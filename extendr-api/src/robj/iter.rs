@@ -52,7 +52,7 @@ pub type IntegerIter<'a> = std::iter::Cloned<std::slice::Iter<'a, i32>>;
 pub type RealIter<'a> = std::iter::Cloned<std::slice::Iter<'a, f64>>;
 
 /// Iterator over primitives in logical objects.
-pub type LogicalIter<'a> = std::iter::Cloned<std::slice::Iter<'a, Rbool>>;
+pub type LogicalIter<'a> = std::iter::Cloned<std::slice::Iter<'a, Logical>>;
 
 /// Iterator over the objects in a vector or string.
 ///

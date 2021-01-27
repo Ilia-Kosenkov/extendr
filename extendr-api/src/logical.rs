@@ -1,104 +1,104 @@
-/// Rbool is a wrapper for i32 in the context of an R's tristate boolean.
+/// Logical is a wrapper for i32 in the context of an R's tristate boolean.
 /// It can be TRUE, FALSE or NA_LOGICAL.
 #[derive(PartialEq, Eq)]
-pub struct Rbool(pub i32);
+pub struct Logical(pub i32);
 
-impl Rbool {
-    pub const TRUE: Rbool = Rbool(1);
-    pub const FALSE: Rbool = Rbool(0);
-    pub const NA: Rbool = Rbool(std::i32::MIN);
+impl Logical {
+    pub const TRUE: Logical = Logical(1);
+    pub const FALSE: Logical = Logical(0);
+    pub const NA: Logical = Logical(std::i32::MIN);
 
     /// Test if TRUE
     pub fn is_true(&self) -> bool {
-        self.0 == (Rbool::TRUE).0
+        self.0 == (Logical::TRUE).0
     }
 
     /// Test if FALSE
     pub fn is_false(&self) -> bool {
-        self.0 == (Rbool::FALSE).0
+        self.0 == (Logical::FALSE).0
     }
 }
 
-impl Clone for Rbool {
+impl Clone for Logical {
     fn clone(&self) -> Self {
         Self(self.0)
     }
 }
 
-impl Copy for Rbool {}
+impl Copy for Logical {}
 
-impl From<i32> for Rbool {
+impl From<i32> for Logical {
     fn from(v: i32) -> Self {
         Self(v)
     }
 }
 
-impl From<Option<i32>> for Rbool {
+impl From<Option<i32>> for Logical {
     // 0 -> FALSE
     // 1 -> TRUE
     // All other values are treated as 'invalid', i.e. `NA`
     fn from(v: Option<i32>) -> Self {
         match v {
-            Some(0) => Rbool::FALSE,
-            Some(1) => Rbool::TRUE,
-            _ => Rbool::NA,
+            Some(0) => Logical::FALSE,
+            Some(1) => Logical::TRUE,
+            _ => Logical::NA,
         }
     }
 }
 
-impl From<bool> for Rbool {
+impl From<bool> for Logical {
     fn from(v: bool) -> Self {
         Self(v as i32)
     }
 }
 
-impl From<Option<bool>> for Rbool {
+impl From<Option<bool>> for Logical {
     // Some(bool) -> bool
     // None -> NA
     fn from(v: Option<bool>) -> Self {
         match v {
-            Some(false) => Rbool::FALSE,
-            Some(true) => Rbool::TRUE,
-            _ => Rbool::NA,
+            Some(false) => Logical::FALSE,
+            Some(true) => Logical::TRUE,
+            _ => Logical::NA,
         }
     }
 }
 
-impl From<Rbool> for bool {
+impl From<Logical> for bool {
     // `true` only if R logical is `TRUE`
     // NAs are `false`
-    fn from(v: Rbool) -> Self {
-        v == Rbool::TRUE
+    fn from(v: Logical) -> Self {
+        v == Logical::TRUE
     }
 }
 
-impl From<Rbool> for Option<bool> {
+impl From<Logical> for Option<bool> {
     // TRUE/FALSE -> true/false
     // NA -> None
-    fn from(v: Rbool) -> Self {
+    fn from(v: Logical) -> Self {
         match v {
-            Rbool::TRUE => Some(true),
-            Rbool::FALSE => Some(false),
+            Logical::TRUE => Some(true),
+            Logical::FALSE => Some(false),
             _ => None,
         }
     }
 }
 
-impl From<&Rbool> for bool {
+impl From<&Logical> for bool {
     // `true` only if R logical is `TRUE`
     // NAs are `false`
-    fn from(v: &Rbool) -> Self {
-        v.0 == (Rbool::TRUE).0
+    fn from(v: &Logical) -> Self {
+        v.0 == (Logical::TRUE).0
     }
 }
 
-impl From<&Rbool> for Option<bool> {
+impl From<&Logical> for Option<bool> {
     // TRUE/FALSE -> true/false
     // NA -> None
-    fn from(v: &Rbool) -> Self {
-        if v.0 == (Rbool::TRUE).0 {
+    fn from(v: &Logical) -> Self {
+        if v.0 == (Logical::TRUE).0 {
             Some(true)
-        } else if v.0 == (Rbool::FALSE).0 {
+        } else if v.0 == (Logical::FALSE).0 {
             Some(false)
         } else {
             None
@@ -106,13 +106,13 @@ impl From<&Rbool> for Option<bool> {
     }
 }
 
-impl std::fmt::Debug for Rbool {
+impl std::fmt::Debug for Logical {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Rbool(0) => write!(f, "FALSE"),
-            Rbool(1) => write!(f, "TRUE"),
-            Rbool(std::i32::MIN) => write!(f, "NA_LOGICAL"),
-            _ => write!(f, "Rbool({})", self.0),
+            Logical(0) => write!(f, "FALSE"),
+            Logical(1) => write!(f, "TRUE"),
+            Logical(std::i32::MIN) => write!(f, "NA_LOGICAL"),
+            _ => write!(f, "Logical({})", self.0),
         }
     }
 }

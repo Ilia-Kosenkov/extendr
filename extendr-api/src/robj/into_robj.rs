@@ -269,7 +269,7 @@ impl ToVectorValue for &bool {
     }
 }
 
-impl ToVectorValue for Rbool {
+impl ToVectorValue for Logical {
     fn sexptype() -> SEXPTYPE {
         LGLSXP
     }
@@ -282,7 +282,7 @@ impl ToVectorValue for Rbool {
     }
 }
 
-impl ToVectorValue for &Rbool {
+impl ToVectorValue for &Logical {
     fn sexptype() -> SEXPTYPE {
         LGLSXP
     }

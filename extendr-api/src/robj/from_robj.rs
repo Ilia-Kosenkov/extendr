@@ -56,7 +56,7 @@ impl_prim_from_robj!(i64);
 impl_prim_from_robj!(f32);
 impl_prim_from_robj!(f64);
 
-impl<'a> FromRobj<'a> for Rbool {
+impl<'a> FromRobj<'a> for Logical {
     fn from_robj(robj: &'a Robj) -> Result<Self> {
         if let Some(v) = robj.as_logical_slice() {
             match v.len() {
@@ -126,7 +126,7 @@ impl<'a> FromRobj<'a> for String {
     }
 }
 
-impl<'a> FromRobj<'a> for Vec<Rbool> {
+impl<'a> FromRobj<'a> for Vec<Logical> {
     fn from_robj(robj: &'a Robj) -> Result<Self> {
         if let Some(v) = robj.as_logical_slice() {
             Ok(Vec::from(v))
@@ -365,7 +365,7 @@ impl<'a> FromRobj<'a> for &'a [bool] {
             if v.iter().any(|item| item.is_na()) {
                 Err(Error::VectorNA)
             } else {
-                // sizeof::<Rbool> == sizeof::<i32> == sizeof::<bool>
+                // sizeof::<Logical> == sizeof::<i32> == sizeof::<bool>
                 Ok(unsafe { std::mem::transmute(v) })
             }
         } else {

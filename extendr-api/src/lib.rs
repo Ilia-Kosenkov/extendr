@@ -313,7 +313,7 @@ impl IsNA for i32 {
     }
 }
 
-impl IsNA for Rbool {
+impl IsNA for Logical {
     fn is_na(&self) -> bool {
         self.0 == std::i32::MIN
     }
@@ -446,7 +446,7 @@ mod tests {
     }
 
     #[extendr]
-    pub fn bool_slice(x: &[Rbool]) -> &[Rbool] {
+    pub fn bool_slice(x: &[Logical]) -> &[Logical] {
         x
     }
 
@@ -601,7 +601,7 @@ mod tests {
                 assert_eq!(new_owned(wrap__i32_slice(robj.get())), robj);
 
                 // #[extendr]
-                // pub fn bool_slice(x: &[Rbool]) -> &[Rbool] { x }
+                // pub fn bool_slice(x: &[Logical]) -> &[Logical] { x }
 
                 let robj = r!([TRUE, FALSE, TRUE]);
                 assert_eq!(new_owned(wrap__bool_slice(robj.get())), robj);
