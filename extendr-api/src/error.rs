@@ -16,7 +16,7 @@ pub fn unwrap_or_throw<T>(r: std::result::Result<T, Error>) -> T {
                 R_ERROR_BUF.clear();
                 R_ERROR_BUF.extend(disp.bytes());
                 R_ERROR_BUF.push(0);
-                Rf_error(R_ERROR_BUF.as_slice().as_ptr() as *mut raw::c_char);
+                Rf_errorcall(R_NilValue, R_ERROR_BUF.as_slice().as_ptr() as *mut raw::c_char);
                 unreachable!("");
             }
             Ok(v) => v,
