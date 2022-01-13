@@ -820,7 +820,6 @@
 <span id="820">820</span>
 <span id="821">821</span>
 <span id="822">822</span>
-<span id="823">823</span>
 </pre><pre class="rust"><code><span class="doccomment">/// Generates an implementation of a unary operator Trait for a scalar type</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Generates the implementation of the specified unary operator for both `Type` and</span>
@@ -1502,30 +1501,6 @@
 
         <span class="comment">// The &#39;example usage&#39; expands to...</span>
         <span class="comment">//</span>
-        <span class="comment">// impl std::fmt::Debug for Rint {</span>
-        <span class="comment">//     fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;&#39;_&gt;) -&gt; std::fmt::Result {</span>
-        <span class="comment">//         let z: Option&lt;$i32&gt; = (*self).into();</span>
-        <span class="comment">//         if let Some(val) = z {</span>
-        <span class="comment">//             write!(f, &quot;{}&quot;, val)</span>
-        <span class="comment">//         } else {</span>
-        <span class="comment">//             write!(f, &quot;na&quot;)</span>
-        <span class="comment">//         }</span>
-        <span class="comment">//     }</span>
-        <span class="comment">// }</span>
-        <span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> {
-            <span class="doccomment">/// Debug format.</span>
-            <span class="kw">fn</span> <span class="macro-nonterminal">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-                <span class="kw">let</span> <span class="ident">z</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">into</span>();
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">val</span>) <span class="op">=</span> <span class="ident">z</span> {
-                    <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">val</span>)
-                } <span class="kw">else</span> {
-                    <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;na&quot;</span>)
-                }
-            }
-        }
-
-        <span class="comment">// The &#39;example usage&#39; expands to...</span>
-        <span class="comment">//</span>
         <span class="comment">//</span>
         <span class="comment">// /// Documentation comments/test built by the #[doc] attributes</span>
         <span class="comment">// impl PartialEq&lt;Rint&gt; for Rint {</span>
@@ -1563,10 +1538,33 @@
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;    assert!(&lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> <span class="string">&quot;&gt;::default().eq(&amp;&lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span> <span class="string">&quot;&gt;::default()));&quot;</span>]</span>
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;}&quot;</span>]</span>
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>]</span>
+            <span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="kw">type</span> {
+                <span class="doccomment">/// NA always fails.</span>
+                <span class="kw">fn</span> <span class="macro-nonterminal">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span>) -&gt; <span class="ident">bool</span> {
+                    <span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::try_from</span>(<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>) <span class="op">==</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">other</span>))
+                }
+            }
+        }
+
+        <span class="comment">// The &#39;example usage&#39; expands to...</span>
+        <span class="comment">//</span>
+        <span class="comment">// /// Documentation comments/test built by the #[doc] attributes</span>
+        <span class="comment">// impl PartialEq&lt;i32&gt; for Rint {</span>
+        <span class="comment">//     fn eq(&amp;self, other: &amp;i32) -&gt; bool {</span>
+        <span class="comment">//         !self.is_na() &amp;&amp; self.0 == *other</span>
+        <span class="comment">//     }</span>
+        <span class="comment">// }</span>
+        <span class="macro">paste::paste!</span> {
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>]</span>
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;use extendr_api::prelude::*;&quot;</span>]</span>
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;test! {&quot;</span>]</span>
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;    assert!(&lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> <span class="string">&quot;&gt;::default().eq(&amp;&lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span> <span class="string">&quot;&gt;::default()));&quot;</span>]</span>
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;}&quot;</span>]</span>
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>]</span>
             <span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> {
                 <span class="doccomment">/// NA always fails.</span>
                 <span class="kw">fn</span> <span class="macro-nonterminal">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span>) -&gt; <span class="ident">bool</span> {
-                    <span class="op">!</span><span class="self">self</span>.<span class="ident">is_na</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="number">0</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">other</span>
+                    <span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::try_from</span>(<span class="self">self</span>.<span class="ident">clone</span>()) <span class="op">==</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">other</span>))
                 }
             }
         }
@@ -1583,12 +1581,12 @@
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>]</span>
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;use extendr_api::prelude::*;&quot;</span>]</span>
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;test! {&quot;</span>]</span>
-            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;    assert_eq!(&lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> <span class="string">&quot;&gt;::default().0, &lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span> <span class="string">&quot;&gt;::default());&quot;</span>]</span>
+            <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;    assert_eq!(&lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> <span class="string">&quot;&gt;::default(), &lt;&quot;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span> <span class="string">&quot;&gt;::default());&quot;</span>]</span>
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;}&quot;</span>]</span>
             <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>]</span>
             <span class="kw">impl</span> <span class="ident">std::default::Default</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="kw">type</span> {
                 <span class="kw">fn</span> <span class="macro-nonterminal">default</span>() -&gt; <span class="self">Self</span> {
-                    <span class="macro-nonterminal">$</span><span class="kw">type</span>(<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span><span class="ident">::default</span>())
+                    <span class="macro-nonterminal">$</span><span class="kw">type</span><span class="macro-nonterminal">::from</span>(<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_prim</span><span class="op">&gt;</span><span class="ident">::default</span>())
                 }
             }
         }

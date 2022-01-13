@@ -372,6 +372,14 @@
 <span id="372">372</span>
 <span id="373">373</span>
 <span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Wrappers are lightweight proxies for references to R datatypes.</span>
 <span class="doccomment">//! They do not contain an Robj (see array.rs for an example of this).</span>
 
@@ -380,6 +388,7 @@
 <span class="kw">use</span> <span class="ident">libR_sys</span>::<span class="kw-2">*</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">altrep</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">complexes</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">doubles</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">environment</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">expr</span>;
@@ -388,6 +397,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">integers</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">lang</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">list</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">logicals</span>;
 <span class="kw">mod</span> <span class="ident">macros</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">matrix</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">nullable</span>;
@@ -405,14 +415,16 @@
     <span class="ident">AltComplexImpl</span>, <span class="ident">AltIntegerImpl</span>, <span class="ident">AltLogicalImpl</span>, <span class="ident">AltRawImpl</span>, <span class="ident">AltRealImpl</span>, <span class="ident">AltStringImpl</span>, <span class="ident">Altrep</span>,
     <span class="ident">AltrepImpl</span>,
 };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">complexes::Complexes</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">doubles::Doubles</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">environment</span>::{<span class="ident">EnvIter</span>, <span class="ident">Environment</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">expr::Expression</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">expr::Expressions</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">externalptr::ExternalPtr</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">function::Function</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integers::Integers</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">lang::Language</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">list</span>::{<span class="ident">FromList</span>, <span class="ident">List</span>, <span class="ident">ListIter</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">logicals::Logicals</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">matrix</span>::{<span class="ident">MatrixConversions</span>, <span class="ident">RArray</span>, <span class="ident">RColumn</span>, <span class="ident">RMatrix</span>, <span class="ident">RMatrix3D</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">nullable::Nullable</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pairlist</span>::{<span class="ident">Pairlist</span>, <span class="ident">PairlistIter</span>};
@@ -538,9 +550,9 @@
 <span class="macro">make_conversions!</span>(<span class="ident">List</span>, <span class="ident">ExpectedList</span>, <span class="ident">is_list</span>, <span class="string">&quot;Not a List&quot;</span>);
 
 <span class="macro">make_conversions!</span>(
-    <span class="ident">Expression</span>,
+    <span class="ident">Expressions</span>,
     <span class="ident">ExpectedExpression</span>,
-    <span class="ident">is_expression</span>,
+    <span class="ident">is_expressions</span>,
     <span class="string">&quot;Not an Expression&quot;</span>
 );
 
@@ -567,7 +579,14 @@
 <span class="macro">make_conversions!</span>(<span class="ident">S4</span>, <span class="ident">ExpectedS4</span>, <span class="ident">is_s4</span>, <span class="string">&quot;Not a S4 type&quot;</span>);
 
 <span class="macro">make_conversions!</span>(<span class="ident">Integers</span>, <span class="ident">ExpectedInteger</span>, <span class="ident">is_integer</span>, <span class="string">&quot;Not an integer type&quot;</span>);
+<span class="macro">make_conversions!</span>(<span class="ident">Logicals</span>, <span class="ident">ExpectedLogical</span>, <span class="ident">is_logical</span>, <span class="string">&quot;Not a logical type&quot;</span>);
 <span class="macro">make_conversions!</span>(<span class="ident">Doubles</span>, <span class="ident">ExpectedReal</span>, <span class="ident">is_real</span>, <span class="string">&quot;Not a floating point type&quot;</span>);
+<span class="macro">make_conversions!</span>(
+    <span class="ident">Complexes</span>,
+    <span class="ident">ExpectedComplex</span>,
+    <span class="ident">is_complex</span>,
+    <span class="string">&quot;Not a complex number or vector&quot;</span>
+);
 <span class="comment">// make_conversions!(Function, ExpectedFunction, is_function, &quot;Not a function&quot;);</span>
 
 <span class="macro">make_conversions!</span>(<span class="ident">Strings</span>, <span class="ident">ExpectedString</span>, <span class="ident">is_string</span>, <span class="string">&quot;Not a string vector&quot;</span>);
@@ -625,7 +644,6 @@
     <span class="doccomment">///     let call_to_xyz = r!(Language::from_values(&amp;[r!(Symbol::from_string(&quot;xyz&quot;)), r!(1), r!(2)]));</span>
     <span class="doccomment">///     assert_eq!(call_to_xyz.is_language(), true);</span>
     <span class="doccomment">///     assert_eq!(call_to_xyz.len(), 3);</span>
-    <span class="doccomment">///     assert_eq!(format!(&quot;{:?}&quot;, call_to_xyz), r#&quot;r!(Language::from_values([sym!(xyz), r!(1), r!(2)]))&quot;#);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">as_language</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Language</span><span class="op">&gt;</span> {
@@ -652,7 +670,6 @@
     <span class="doccomment">/// test! {</span>
     <span class="doccomment">///     let list = r!(List::from_values(&amp;[r!(0), r!(1), r!(2)]));</span>
     <span class="doccomment">///     assert_eq!(list.is_list(), true);</span>
-    <span class="doccomment">///     assert_eq!(format!(&quot;{:?}&quot;, list), r#&quot;r!(List::from_values([r!(0), r!(1), r!(2)]))&quot;#);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">as_list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">List</span><span class="op">&gt;</span> {
@@ -663,14 +680,13 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use extendr_api::prelude::*;</span>
     <span class="doccomment">/// test! {</span>
-    <span class="doccomment">///     let expr = r!(Expression::from_values(&amp;[r!(0), r!(1), r!(2)]));</span>
-    <span class="doccomment">///     assert_eq!(expr.is_expression(), true);</span>
-    <span class="doccomment">///     assert_eq!(expr.as_expression(), Some(Expression::from_values(vec![r!(0), r!(1), r!(2)])));</span>
-    <span class="doccomment">///     assert_eq!(format!(&quot;{:?}&quot;, expr), r#&quot;r!(Expression::from_values([r!(0), r!(1), r!(2)]))&quot;#);</span>
+    <span class="doccomment">///     let expr = r!(Expressions::from_values(&amp;[r!(0), r!(1), r!(2)]));</span>
+    <span class="doccomment">///     assert_eq!(expr.is_expressions(), true);</span>
+    <span class="doccomment">///     assert_eq!(expr.as_expressions(), Some(Expressions::from_values(vec![r!(0), r!(1), r!(2)])));</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">as_expression</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expression</span><span class="op">&gt;</span> {
-        <span class="ident">Expression::try_from</span>(<span class="self">self</span>.<span class="ident">as_robj</span>().<span class="ident">clone</span>()).<span class="ident">ok</span>()
+    <span class="kw">fn</span> <span class="ident">as_expressions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expressions</span><span class="op">&gt;</span> {
+        <span class="ident">Expressions::try_from</span>(<span class="self">self</span>.<span class="ident">as_robj</span>().<span class="ident">clone</span>()).<span class="ident">ok</span>()
     }
 
     <span class="doccomment">/// Convert an environment object (ENVSXP) to a Env wrapper.</span>
