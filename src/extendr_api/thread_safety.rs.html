@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/thread_safety.rs`."><title>thread_safety.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (2f1bd0729 2023-10-27)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../extendr_api/index.html"><img src="https://raw.githubusercontent.com/extendr/extendr/master/extendr-logo-256.png" alt="extendr_api"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/thread_safety.rs`."><title>thread_safety.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (a2d9d73e6 2024-01-10)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../extendr_api/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -127,91 +129,50 @@
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
 <a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Provide limited protection for multithreaded access to the R API.
 
 </span><span class="kw">use crate</span>::<span class="kw-2">*</span>;
-<span class="kw">use </span>std::sync::atomic::{AtomicU32, Ordering};
+<span class="kw">use </span>std::cell::Cell;
+<span class="kw">use </span>std::sync::Mutex;
 
-<span class="kw">static </span>OWNER_THREAD: AtomicU32 = AtomicU32::new(<span class="number">0</span>);
-<span class="kw">static </span>NEXT_THREAD_ID: AtomicU32 = AtomicU32::new(<span class="number">1</span>);
+<span class="doccomment">/// A global lock, that should represent the global lock on the R-API.
+/// It is not tied to an actual instance of R.
+</span><span class="kw">static </span>R_API_LOCK: Mutex&lt;()&gt; = Mutex::new(());
 
 <span class="macro">thread_local! </span>{
-    <span class="kw">static </span>THREAD_ID: u32 = NEXT_THREAD_ID.fetch_add(<span class="number">1</span>, Ordering::SeqCst);
+    <span class="kw">static </span>THREAD_HAS_LOCK: Cell&lt;bool&gt; = Cell::new(<span class="bool-val">false</span>);
 }
 
-<span class="comment">// Get an integer 1.. for each thread that calls this.
-</span><span class="kw">pub fn </span>this_thread_id() -&gt; u32 {
-    THREAD_ID.with(|<span class="kw-2">&amp;</span>v| v)
-}
-
-<span class="doccomment">/// Run a function single threaded.
-/// Note: This will fail badly if the called function panics or calls RF_error.
+<span class="doccomment">/// Run `f` while ensuring that `f` runs in a single-threaded manner.
 ///
-/// ```
-/// use extendr_api::prelude::*;
-/// use std::sync::atomic::{AtomicU32, Ordering};
-/// static GLOBAL_THREAD_COUNT: AtomicU32 = AtomicU32::new(0);
+/// This is intended for single-threaded access of the R's C-API.
+/// It is possible to have nested calls of `single_threaded` without deadlocking.
 ///
-/// let threads : Vec&lt;_&gt; = (0..100).map(|_| {
-///    std::thread::spawn(move|| {
-///       single_threaded(|| {
-///         // check that we are single threaded.
-///         let old_thread_count = GLOBAL_THREAD_COUNT.fetch_add(1, Ordering::AcqRel);
-///         assert_eq!(old_thread_count, 0);
-///         std::thread::sleep(std::time::Duration::from_millis(1));
-///         GLOBAL_THREAD_COUNT.fetch_sub(1, Ordering::AcqRel);
-///         // recursive calls are ok.
-///         assert_eq!(single_threaded(|| {
-///           1
-///         }), 1);    
-///       })
-///    })
-/// }).collect();
-/// ```
+/// Note: This will fail badly if the called function `f` panics or calls `Rf_error`.
 </span><span class="kw">pub fn </span>single_threaded&lt;F, R&gt;(f: F) -&gt; R
 <span class="kw">where
     </span>F: FnOnce() -&gt; R,
 {
-    <span class="kw">let </span>id = this_thread_id();
-    <span class="kw">let </span>old_id = OWNER_THREAD.load(Ordering::Acquire);
+    <span class="kw">let </span>has_lock = THREAD_HAS_LOCK.with(|x| x.get());
 
-    <span class="kw">if </span>old_id != id {
-        <span class="comment">// wait for OWNER_THREAD to become 0 and put us as the owner.
-        </span><span class="kw">while </span>OWNER_THREAD
-            .compare_exchange(<span class="number">0</span>, id, Ordering::Acquire, Ordering::Relaxed)
-            .is_err()
-        {
-            std::thread::sleep(std::time::Duration::from_millis(<span class="number">1</span>));
-        }
+    <span class="comment">// acquire R-API lock
+    </span><span class="kw">let </span>_guard = <span class="kw">if </span>!has_lock {
+        <span class="prelude-val">Some</span>(R_API_LOCK.lock().unwrap())
+    } <span class="kw">else </span>{
+        <span class="prelude-val">None
+    </span>};
+
+    <span class="comment">// this thread now has the lock
+    </span>THREAD_HAS_LOCK.with(|x| x.set(<span class="bool-val">true</span>));
+
+    <span class="kw">let </span>result = f();
+
+    <span class="comment">// release the R-API lock
+    </span><span class="kw">if </span>_guard.is_some() {
+        THREAD_HAS_LOCK.with(|x| x.set(<span class="bool-val">false</span>));
     }
 
-    <span class="kw">let </span>res = f();
-
-    <span class="kw">if </span>old_id != id {
-        <span class="comment">// release the lock and signal waiting threads.
-        </span>OWNER_THREAD.store(<span class="number">0</span>, Ordering::Release);
-    }
-
-    res
+    result
 }
 
 <span class="doccomment">/// This function is used by the wrapper logic to catch
@@ -225,7 +186,10 @@
 {
     <span class="kw">match </span>std::panic::catch_unwind(f) {
         <span class="prelude-val">Ok</span>(res) =&gt; res,
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">unsafe </span>{ libR_sys::Rf_error(err_str.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>std::os::raw::c_char) },
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
+            <span class="kw">let </span>err_str = CString::new(err_str).unwrap();
+            <span class="kw">unsafe </span>{ libR_sys::Rf_error(err_str.as_ptr()) }
+        }
     }
 }
 
@@ -239,12 +203,12 @@
     };
 }
 
-<span class="doccomment">/// Wrap an R function such as Rf_findFunction and convert errors and panics into results.
+<span class="doccomment">/// Wrap an R function such as `Rf_findFunction` and convert errors and panics into results.
 /// ```ignore
 /// use extendr_api::prelude::*;
 /// test! {
 ///    let res = catch_r_error(|| unsafe {
-///        throw_r_error(&quot;bad things!&quot;);
+///        throw_r_error("bad things!");
 ///        std::ptr::null_mut()
 ///    });
 ///    assert_eq!(res.is_ok(), false);
@@ -257,7 +221,7 @@
 {
     <span class="kw">use </span>std::os::raw;
 
-    <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>do_call&lt;F&gt;(data: <span class="kw-2">*mut </span>raw::c_void) -&gt; SEXP
+    <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>do_call&lt;F&gt;(data: <span class="kw-2">*mut </span>raw::c_void) -&gt; SEXP
     <span class="kw">where
         </span>F: FnOnce() -&gt; SEXP + Copy,
     {
@@ -266,9 +230,9 @@
         f()
     }
 
-    <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>do_cleanup(<span class="kw">_</span>: <span class="kw-2">*mut </span>raw::c_void, jump: Rboolean) {
+    <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>do_cleanup(<span class="kw">_</span>: <span class="kw-2">*mut </span>raw::c_void, jump: Rboolean) {
         <span class="kw">if </span>jump != <span class="number">0 </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;R has thrown an error.&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">"R has thrown an error."</span>);
         }
     }
 
@@ -288,7 +252,7 @@
             R_UnwindProtect(fun, data, cleanfun, cleandata, cont)
         }) {
             <span class="prelude-val">Ok</span>(res) =&gt; <span class="prelude-val">Ok</span>(res),
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;Error in protected R code&quot;</span>.into()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="string">"Error in protected R code"</span>.into()),
         };
         Rf_unprotect(<span class="number">1</span>);
         res
