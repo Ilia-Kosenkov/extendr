@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (78a775127 2024-05-11)" data-channel="nightly" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-405f8b29f52305f8.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.83.0-nightly (12b26c13f 2024-09-07)" data-channel="nightly" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-7e3bb6c46e92e77c.js" ><script src="../../static.files/storage-29b1d5a9048d38fe.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-14659ec02b58af51.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-40f72c9259523cb3.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1014,32 +1015,7 @@
 <a href="#1014" id="1014">1014</a>
 <a href="#1015" id="1015">1015</a>
 <a href="#1016" id="1016">1016</a>
-<a href="#1017" id="1017">1017</a>
-<a href="#1018" id="1018">1018</a>
-<a href="#1019" id="1019">1019</a>
-<a href="#1020" id="1020">1020</a>
-<a href="#1021" id="1021">1021</a>
-<a href="#1022" id="1022">1022</a>
-<a href="#1023" id="1023">1023</a>
-<a href="#1024" id="1024">1024</a>
-<a href="#1025" id="1025">1025</a>
-<a href="#1026" id="1026">1026</a>
-<a href="#1027" id="1027">1027</a>
-<a href="#1028" id="1028">1028</a>
-<a href="#1029" id="1029">1029</a>
-<a href="#1030" id="1030">1030</a>
-<a href="#1031" id="1031">1031</a>
-<a href="#1032" id="1032">1032</a>
-<a href="#1033" id="1033">1033</a>
-<a href="#1034" id="1034">1034</a>
-<a href="#1035" id="1035">1035</a>
-<a href="#1036" id="1036">1036</a>
-<a href="#1037" id="1037">1037</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//!
-//! A safe and user friendly R extension interface.
-//!
-//! * Build rust extensions to R.
-//! * Convert R packages to Rust crates.
+<a href="#1017" id="1017">1017</a></pre></div><pre class="rust"><code><span class="doccomment">//! An ergonomic, opinionated, safe and user-friendly wrapper to the R-API
 //!
 //! This library aims to provide an interface that will be familiar to
 //! first-time users of Rust or indeed any compiled language.
@@ -1212,25 +1188,6 @@
 //! }
 //! ```
 //!
-//! You can call R functions and primitives using the [call!] macro.
-//! ```
-//! use extendr_api::prelude::*;
-//! test! {
-//!
-//!     // As one R! macro call
-//!     let confint1 = R!("confint(lm(weight ~ group - 1, PlantGrowth))")?;
-//!    
-//!     // As many parameterized calls.
-//!     let mut formula = lang!("~", sym!(weight), lang!("-", sym!(group), 1.0));
-//!     formula.set_class(["formula"])?;
-//!     let plant_growth = global!(PlantGrowth)?;
-//!     let model = call!("lm", formula, plant_growth)?;
-//!     let confint2 = call!("confint", model)?;
-//!    
-//!     assert_eq!(confint1.as_real_vector(), confint2.as_real_vector());
-//! }
-//! ```
-//!
 //! Rust has a concept of "Owned" and "Borrowed" objects.
 //!
 //! Owned objects, such as [Vec] and [String] allocate memory
@@ -1291,27 +1248,16 @@
 //! }
 //! ```
 //!
-//! ## Returning Result&lt;T,E&gt; to R
+//! ## Returning `Result&lt;T, E&gt;` to R
 //!
-//! Currently, `throw_r_error()` leaks memory because it jumps to R without properly dropping
-//! some rust objects.
-//!
-//! The memory-safe way to do error handling with extendr is to return a Result&lt;T, E&gt;
-//! to R. By default, any Err will trigger a panic! on the rust side which unwinds the stack.
-//! The rust error trace will be printed to stderr, not R terminal. Any Ok value is returned
-//! as is.
-//!
-//! Alternatively, two experimental non-leaking features, `result_list` and `result_condition`,
+//! Two experimental features for returning error-aware R `list`s, `result_list` and `result_condition`,
 //! can be toggled to avoid panics on `Err`. Instead, an `Err` `x` is returned as either
 //!  - list: `list(ok=NULL, err=x)` when `result_list` is enabled,
 //!  - error condition: `&lt;error: extendr_error&gt;`, with `x` placed in `condition$value`, when `resultd_condition` is enabled.
 //!
 //! It is currently solely up to the user to handle any result on R side.
 //!
-//! The minimal overhead of calling an extendr function is in the ballpark of 2-4us.
-//! Returning a condition or list increases the overhead to 4-8us. Checking &amp; handling the result
-//! on R side will likely increase overall overhead to 8-16us, depending on how efficiently the
-//! result is handled.
+//! There is an added overhead of wrapping Rust results in an R `list` object.
 //!
 //! ```ignore
 //! use extendr_api::prelude::*;
@@ -1354,26 +1300,27 @@
 //!   if (inherits(val_or_err, "extendr_error")) stop(val_or_err)
 //!   val_or_err
 //! }
-//!
 //! ```
 //!
 //! ## Feature gates
 //!
 //! extendr-api has some optional features behind these feature gates:
 //!
-//! - `ndarray`: provides the conversion between R's matrices and [ndarray](https://docs.rs/ndarray/latest/ndarray/).
-//! - `num-complex`: provides the conversion between R's complex numbers and [num-complex](https://docs.rs/num-complex/latest/num_complex/).
-//! - `serde`: provides the [Serde](https://serde.rs/) support.
+//! - `ndarray`: provides the conversion between R's matrices and [`ndarray`](https://docs.rs/ndarray/latest/ndarray/).
+//! - `num-complex`: provides the conversion between R's complex numbers and [`num-complex`](https://docs.rs/num-complex/latest/num_complex/).
+//! - `serde`: provides the [`serde`](https://serde.rs/) support.
 //! - `graphics`: provides the functionality to control or implement graphics devices.
+//! - `either`: provides implementation of type conversion traits for `Either&lt;L, R&gt;` from [`either`](https://docs.rs/either/latest/either/) if `L` and `R` both implement those traits.
+//! - `faer`: provides conversion between R's matrices and [`faer`](https://docs.rs/faer/latest/faer/).
 //!
-//! extendr-api supports three ways of returning a Result&lt;T,E&gt; to R. Only one behavior feature can be enabled at a time.
+//! extendr-api supports three ways of returning a Result&lt;T,E&gt; to R.
+//! Only one behavior feature can be enabled at a time.
 //! - `result_panic`: Default behavior, return `Ok` as is, panic! on any `Err`
 //!
 //! Default behavior can be overridden by specifying `extend_api` features, i.e. `extendr-api = {..., default-features = false, features= ["result_condition"]}`
 //! These features are experimental and are subject to change.
 //! - `result_list`: return `Ok` as `list(ok=?, err=NULL)` or `Err` `list(ok=NULL, err=?)`
 //! - `result_condition`: return `Ok` as is or `Err` as $value in an R error condition.
-
 </span><span class="attr">#![doc(
     html_logo_url = <span class="string">"https://raw.githubusercontent.com/extendr/extendr/master/extendr-logo-256.png"
 </span>)]
@@ -1459,8 +1406,21 @@
 <span class="attr">#[doc(hidden)]
 </span><span class="kw">pub use </span>std::collections::HashMap;
 
-<span class="attr">#[doc(hidden)]
+<span class="doccomment">/// This is needed for the generation of wrappers.
+</span><span class="attr">#[doc(hidden)]
 </span><span class="kw">pub use </span>libR_sys::DllInfo;
+
+<span class="doccomment">/// This is necessary for `#[extendr]`-impl
+</span><span class="attr">#[doc(hidden)]
+</span><span class="kw">pub use </span>libR_sys::R_ExternalPtrAddr;
+
+<span class="doccomment">/// This is used in `#[extendr(use_rng = true)]` on `fn`-items.
+</span><span class="attr">#[doc(hidden)]
+</span><span class="kw">pub use </span>libR_sys::GetRNGstate;
+
+<span class="doccomment">/// This is used in `#[extendr(use_rng = true)]` on `fn`-items.
+</span><span class="attr">#[doc(hidden)]
+</span><span class="kw">pub use </span>libR_sys::PutRNGstate;
 
 <span class="attr">#[doc(hidden)]
 </span><span class="kw">pub use </span>libR_sys::SEXP;
@@ -1917,7 +1877,7 @@
             person.set_name(<span class="string">"fred"</span>);
             <span class="kw">let </span>robj = <span class="macro">r!</span>(person);
             <span class="macro">assert_eq!</span>(robj.check_external_ptr_type::&lt;Person&gt;(), <span class="bool-val">true</span>);
-            <span class="kw">let </span>person2 = &lt;<span class="kw-2">&amp;</span>Person&gt;::from_robj(<span class="kw-2">&amp;</span>robj).unwrap();
+            <span class="kw">let </span>person2 = &lt;<span class="kw-2">&amp;</span>Person&gt;::try_from(<span class="kw-2">&amp;</span>robj).unwrap();
             <span class="macro">assert_eq!</span>(person2.name(), <span class="string">"fred"</span>);
         }
     }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/robj/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (78a775127 2024-05-11)" data-channel="nightly" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/robj/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-405f8b29f52305f8.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.83.0-nightly (12b26c13f 2024-09-07)" data-channel="nightly" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-7e3bb6c46e92e77c.js" ><script src="../../../static.files/storage-29b1d5a9048d38fe.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-14659ec02b58af51.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-40f72c9259523cb3.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1087,27 +1088,7 @@
 <a href="#1087" id="1087">1087</a>
 <a href="#1088" id="1088">1088</a>
 <a href="#1089" id="1089">1089</a>
-<a href="#1090" id="1090">1090</a>
-<a href="#1091" id="1091">1091</a>
-<a href="#1092" id="1092">1092</a>
-<a href="#1093" id="1093">1093</a>
-<a href="#1094" id="1094">1094</a>
-<a href="#1095" id="1095">1095</a>
-<a href="#1096" id="1096">1096</a>
-<a href="#1097" id="1097">1097</a>
-<a href="#1098" id="1098">1098</a>
-<a href="#1099" id="1099">1099</a>
-<a href="#1100" id="1100">1100</a>
-<a href="#1101" id="1101">1101</a>
-<a href="#1102" id="1102">1102</a>
-<a href="#1103" id="1103">1103</a>
-<a href="#1104" id="1104">1104</a>
-<a href="#1105" id="1105">1105</a>
-<a href="#1106" id="1106">1106</a>
-<a href="#1107" id="1107">1107</a>
-<a href="#1108" id="1108">1108</a>
-<a href="#1109" id="1109">1109</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//! R object handling.
+<a href="#1090" id="1090">1090</a></pre></div><pre class="rust"><code><span class="doccomment">//! R object handling.
 //!
 //! See. [Writing R Extensions](https://cran.r-project.org/doc/manuals/R-exts.html)
 //!
@@ -1126,7 +1107,6 @@
 <span class="kw">use </span>libR_sys::<span class="kw-2">*</span>;
 <span class="kw">use </span>SEXPTYPE::<span class="kw-2">*</span>;
 
-<span class="kw">pub use </span>from_robj::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>into_robj::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>iter::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>operators::Operators;
@@ -1135,9 +1115,6 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::scalar::{Rbool, Rfloat, Rint};
 <span class="kw">use crate</span>::<span class="kw-2">*</span>;
-
-<span class="comment">// deprecated
-</span><span class="kw">mod </span>from_robj;
 
 <span class="kw">mod </span>debug;
 <span class="kw">mod </span>into_robj;
@@ -1274,7 +1251,7 @@
     /// # Safety
     ///
     /// Unless the type is correct, this will cause undefined behaviour.
-    /// Creating this slice will also instatiate and Altrep objects.
+    /// Creating this slice will also instantiate an Altrep objects.
     </span><span class="kw">unsafe fn </span>as_typed_slice_raw&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[T] {
         <span class="kw">let </span>len = XLENGTH(<span class="self">self</span>.get()) <span class="kw">as </span>usize;
         <span class="kw">let </span>data = DATAPTR_RO(<span class="self">self</span>.get()) <span class="kw">as </span><span class="kw-2">*const </span>T;
@@ -1286,8 +1263,8 @@
     /// # Safety
     ///
     /// Unless the type is correct, this will cause undefined behaviour.
-    /// Creating this slice will also instatiate and Altrep objects.
-    /// Not all obejects (especially not list and strings) support this.
+    /// Creating this slice will also instantiate Altrep objects.
+    /// Not all objects (especially not list and strings) support this.
     </span><span class="kw">unsafe fn </span>as_typed_slice_raw_mut&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>[T] {
         <span class="kw">let </span>len = XLENGTH(<span class="self">self</span>.get()) <span class="kw">as </span>usize;
         <span class="kw">let </span>data = DATAPTR(<span class="self">self</span>.get_mut()) <span class="kw">as </span><span class="kw-2">*mut </span>T;
@@ -1359,8 +1336,6 @@
     ///     assert_eq!(R!("function() {}")?.rtype(), Rtype::Function);
     ///     assert_eq!(Environment::new_with_parent(global_env()).rtype(), Rtype::Environment);
     ///     assert_eq!(lang!("+", 1, 2).rtype(), Rtype::Language);
-    ///     assert_eq!(r!(Primitive::from_string("if")).rtype(), Rtype::Special);
-    ///     assert_eq!(r!(Primitive::from_string("+")).rtype(), Rtype::Builtin);
     ///     assert_eq!(r!(Rstr::from_string("hello")).rtype(), Rtype::Rstr);
     ///     assert_eq!(r!(TRUE).rtype(), Rtype::Logicals);
     ///     assert_eq!(r!(1).rtype(), Rtype::Integers);
@@ -1470,6 +1445,9 @@
                     LGLSXP =&gt; <span class="kw-2">*</span>(LOGICAL(sexp)) == libR_sys::R_NaInt,
                     REALSXP =&gt; R_IsNA(<span class="kw-2">*</span>(REAL(sexp))) != <span class="number">0</span>,
                     CPLXSXP =&gt; R_IsNA((<span class="kw-2">*</span>COMPLEX(sexp)).r) != <span class="number">0</span>,
+                    <span class="comment">// a character vector contains `CHARSXP`, and thus you
+                    // seldom have `Robj`'s that are `CHARSXP` themselves
+                    </span>CHARSXP =&gt; sexp == libR_sys::R_NaString,
                     <span class="kw">_ </span>=&gt; <span class="bool-val">false</span>,
                 }
             }
@@ -1705,18 +1683,19 @@
     /// ```
     </span><span class="kw">pub fn </span>as_str&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">match </span><span class="self">self</span>.sexptype() {
+            <span class="kw">let </span>charsxp = <span class="kw">match </span><span class="self">self</span>.sexptype() {
                 STRSXP =&gt; {
-                    <span class="kw">if </span><span class="self">self</span>.len() != <span class="number">1 </span>{
-                        <span class="prelude-val">None
-                    </span>} <span class="kw">else </span>{
-                        <span class="prelude-val">Some</span>(to_str(R_CHAR(STRING_ELT(<span class="self">self</span>.get(), <span class="number">0</span>)) <span class="kw">as </span><span class="kw-2">*const </span>u8))
+                    <span class="comment">// only allows scalar strings
+                    </span><span class="kw">if </span><span class="self">self</span>.len() != <span class="number">1 </span>{
+                        <span class="kw">return </span><span class="prelude-val">None</span>;
                     }
+                    STRING_ELT(<span class="self">self</span>.get(), <span class="number">0</span>)
                 }
-                <span class="comment">// CHARSXP =&gt; Some(to_str(R_CHAR(self.get()) as *const u8)),
-                // SYMSXP =&gt; Some(to_str(R_CHAR(PRINTNAME(self.get())) as *const u8)),
-                </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-            }
+                CHARSXP =&gt; <span class="self">self</span>.get(),
+                SYMSXP =&gt; PRINTNAME(<span class="self">self</span>.get()),
+                <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+            };
+            rstr::charsxp_to_str(charsxp)
         }
     }
 
@@ -1907,12 +1886,11 @@
 
 <span class="macro">make_typed_slice!</span>(Rbool, INTEGER, LGLSXP);
 <span class="macro">make_typed_slice!</span>(i32, INTEGER, INTSXP);
-<span class="macro">make_typed_slice!</span>(u32, INTEGER, INTSXP);
 <span class="macro">make_typed_slice!</span>(Rint, INTEGER, INTSXP);
 <span class="macro">make_typed_slice!</span>(f64, REAL, REALSXP);
 <span class="macro">make_typed_slice!</span>(Rfloat, REAL, REALSXP);
 <span class="macro">make_typed_slice!</span>(u8, RAW, RAWSXP);
-<span class="macro">make_typed_slice!</span>(Rstr, STRING_PTR, STRSXP);
+<span class="macro">make_typed_slice!</span>(Rstr, STRING_PTR_RO, STRSXP);
 <span class="macro">make_typed_slice!</span>(c64, COMPLEX, CPLXSXP);
 <span class="macro">make_typed_slice!</span>(Rcplx, COMPLEX, CPLXSXP);
 <span class="macro">make_typed_slice!</span>(Rcomplex, COMPLEX, CPLXSXP);
@@ -1927,7 +1905,6 @@
     /// ```
     /// use extendr_api::prelude::*;
     /// test! {
-    ///
     ///    let mut robj = r!("hello");
     ///    robj.set_attrib(sym!(xyz), 1);
     ///    assert_eq!(robj.get_attrib(sym!(xyz)), Some(r!(1)));
@@ -1989,8 +1966,7 @@
             <span class="kw">let </span>sexp = <span class="self">self</span>.get_mut();
             <span class="kw">let </span>result =
                 single_threaded(|| catch_r_error(|| Rf_setAttrib(sexp, name.get(), value.get())));
-            <span class="kw">let </span>result = result.map(|<span class="kw">_</span>| <span class="self">self</span>);
-            result
+            result.map(|<span class="kw">_</span>| <span class="self">self</span>)
         }
     }
 
@@ -2192,20 +2168,6 @@
             </span>R_compute_identical(<span class="self">self</span>.get(), rhs.get(), <span class="number">16</span>) != Rboolean::FALSE
         }
     }
-}
-
-<span class="comment">// Internal utf8 to str conversion.
-// Lets not worry about non-ascii/unicode strings for now (or ever).
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>to_str&lt;<span class="lifetime">'a</span>&gt;(ptr: <span class="kw-2">*const </span>u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str {
-    <span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
-    <span class="kw">loop </span>{
-        <span class="kw">if </span><span class="kw-2">*</span>ptr.offset(len) == <span class="number">0 </span>{
-            <span class="kw">break</span>;
-        }
-        len += <span class="number">1</span>;
-    }
-    <span class="kw">let </span>slice = std::slice::from_raw_parts(ptr, len <span class="kw">as </span>usize);
-    std::str::from_utf8_unchecked(slice)
 }
 
 <span class="doccomment">/// Release any owned objects.

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/robj/into_robj.rs`."><title>into_robj.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (78a775127 2024-05-11)" data-channel="nightly" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `extendr-api/src/robj/into_robj.rs`."><title>into_robj.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-405f8b29f52305f8.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="extendr_api" data-themes="" data-resource-suffix="" data-rustdoc-version="1.83.0-nightly (12b26c13f 2024-09-07)" data-channel="nightly" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-7e3bb6c46e92e77c.js" ><script src="../../../static.files/storage-29b1d5a9048d38fe.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-14659ec02b58af51.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-40f72c9259523cb3.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -826,23 +827,32 @@
 <a href="#826" id="826">826</a>
 <a href="#827" id="827">827</a>
 <a href="#828" id="828">828</a>
-</pre></div><pre class="rust"><code><span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href="#829" id="829">829</a>
+<a href="#830" id="830">830</a>
+<a href="#831" id="831">831</a>
+<a href="#832" id="832">832</a>
+<a href="#833" id="833">833</a></pre></div><pre class="rust"><code><span class="kw">use super</span>::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::scalar::Scalar;
 <span class="kw">use </span><span class="kw">crate</span>::single_threaded;
 
 <span class="kw">mod </span>repeat_into_robj;
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>str_to_character(s: <span class="kw-2">&amp;</span>str) -&gt; SEXP {
+<span class="doccomment">/// Returns an `CHARSXP` based on the provided `&amp;str`.
+///
+/// Note that R does string interning, thus repeated application of this
+/// function on the same string, will incur little computational cost.
+///
+/// Note, that you must protect the return value somehow.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>str_to_character(s: <span class="kw-2">&amp;</span>str) -&gt; SEXP {
     <span class="kw">unsafe </span>{
         <span class="kw">if </span>s.is_na() {
             R_NaString
+        } <span class="kw">else if </span>s.is_empty() {
+            R_BlankString
         } <span class="kw">else </span>{
             single_threaded(|| {
-                Rf_mkCharLenCE(
-                    s.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>raw::c_char,
-                    s.len() <span class="kw">as </span>i32,
-                    cetype_t::CE_UTF8,
-                )
+                <span class="comment">// this function embeds a terminating \nul
+                </span>Rf_mkCharLenCE(s.as_ptr().cast(), s.len() <span class="kw">as </span>i32, cetype_t::CE_UTF8)
             })
         }
     }
@@ -1403,7 +1413,7 @@
     /// # Arguments
     ///
     /// * `dims` - an array containing the length of each dimension
-    </span><span class="kw">fn </span>collect_rarray&lt;<span class="lifetime">'a</span>, <span class="kw">const </span>LEN: usize&gt;(
+    </span><span class="kw">fn </span>collect_rarray&lt;<span class="kw">const </span>LEN: usize&gt;(
         <span class="self">self</span>,
         dims: [usize; LEN],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RArray&lt;<span class="self">Self</span>::Item, [usize; LEN]&gt;&gt;
@@ -1411,8 +1421,7 @@
         </span><span class="self">Self</span>: Iterator,
         <span class="self">Self</span>: Sized,
         <span class="self">Self</span>::Item: ToVectorValue,
-        Robj: AsTypedSlice&lt;<span class="lifetime">'a</span>, <span class="self">Self</span>::Item&gt;,
-        <span class="self">Self</span>::Item: <span class="lifetime">'a</span>,
+        Robj: <span class="kw">for</span>&lt;<span class="lifetime">'a</span>&gt; AsTypedSlice&lt;<span class="lifetime">'a</span>, <span class="self">Self</span>::Item&gt;,
     {
         <span class="kw">let </span><span class="kw-2">mut </span>vector = <span class="self">self</span>.collect_robj();
         <span class="kw">let </span>prod = dims.iter().product::&lt;usize&gt;();
@@ -1486,7 +1495,7 @@
     <span class="kw-2">&amp;</span><span class="lifetime">'a </span>T: ToVectorValue + <span class="lifetime">'a</span>,
 {
     <span class="kw">fn </span>from(val: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[T; N]) -&gt; <span class="self">Self </span>{
-        fixed_size_collect(val.into_iter(), N)
+        fixed_size_collect(val.iter(), N)
     }
 }
 
@@ -1496,7 +1505,7 @@
     <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T: ToVectorValue + <span class="lifetime">'a</span>,
 {
     <span class="kw">fn </span>from(val: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[T; N]) -&gt; <span class="self">Self </span>{
-        fixed_size_collect(val.into_iter(), N)
+        fixed_size_collect(val.iter_mut(), N)
     }
 }
 
@@ -1521,7 +1530,7 @@
     <span class="kw-2">&amp;</span><span class="lifetime">'a </span>T: ToVectorValue,
 {
     <span class="kw">fn </span>from(val: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[T]) -&gt; <span class="self">Self </span>{
-        val.into_iter().collect_robj()
+        val.iter().collect_robj()
     }
 }
 
@@ -1538,13 +1547,14 @@
 <span class="kw">impl </span>From&lt;Vec&lt;Rstr&gt;&gt; <span class="kw">for </span>Robj {
     <span class="doccomment">/// Convert a vector of Rstr into strings.
     </span><span class="kw">fn </span>from(val: Vec&lt;Rstr&gt;) -&gt; <span class="self">Self </span>{
-        Strings::from_values(val.into_iter()).into()
+        Strings::from_values(val).into()
     }
 }
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use crate as </span>extendr_api;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_vec_rint_to_robj() {
